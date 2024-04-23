@@ -1,0 +1,43 @@
+---
+# tasks file for release-installer
+- name: Check if binary already installed
+  stat:
+    path: "{{ install_path }}/{{ binary_filename | basename }}"
+  register: file_status
+- block:
+  - name: Create tempory directory
+    tempfile:
+      state: directory
+    register: tempdirectory
+  - name: Set archive name
+    ansible.builtin.set_fact:
+      archive_name: "{{ archive_url | basename | regex_search('(.*?)\\.', '\\1') | first }}" # @todo à terminer
+  - name: Download archive
+    get_url:
+      force: true
+      # yamllint disable-line rule:line-length
+      url: "{{ archive_url }}"
+      dest: "/tmp"
+    register: downloaded_file
+  - name: Extract {{ downloaded_file.dest }}
+    unarchive:
+      src: "{{ downloaded_file.dest }}"
+      dest: "/tmp"
+      remote_src: true
+    register: archive
+  - name: Install binary {{ install_path }}/{{ binary_filename | basename }}
+    become: true
+    copy:
+      mode: 755
+      src: "{{ archive.dest }}/{{ archive_name }}/{{ binary_filename }}"
+      dest: "{{ install_path }}/"
+      remote_src: true
+  - name: Remove downloaded
+    ansible.builtin.file:
+      path: "{{ downloaded_file.dest }}"
+      state: absent
+  - name: Remove extracted archive
+    ansible.builtin.file:
+      path: "{{ archive.dest }}/{{ archive_name }}"
+      state: absent
+  when: not file_status.stat.exists

@@ -1,0 +1,4 @@
+---
+# defaults file for release-installer
+install_path: /usr/bin
+uncompress: true # may not be an archive

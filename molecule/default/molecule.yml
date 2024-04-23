@@ -1,0 +1,8 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: ubuntu22
+    dockerfile: Dockerfile.ubuntu22
+    pre_build_image: false

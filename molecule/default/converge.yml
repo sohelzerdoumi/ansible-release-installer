@@ -1,0 +1,14 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  roles:
+   - role: sohelzerdoumi.release_installer
+     archive_url: https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
+     binary_filename: bin/nvim
+  post_tasks:
+  - name: Check if file exists using stat module
+    stat:
+      path: /usr/bin/nvim
+    register: file_status
+    failed_when: not file_status.stat.exists
