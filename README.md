@@ -19,7 +19,7 @@ Example Playbook
     roles:
     - role: sohelzerdoumi.release_installer
       archive_url: https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
-      binary_filename: bin/nvim
+      archive_binary_filepath: nvim-linux64/bin/nvim
 ```
 
 Requirements
