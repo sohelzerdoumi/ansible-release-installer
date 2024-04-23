@@ -1,4 +1,4 @@
 ---
 # vars file for release-installer
 archive_url: ''
-archive_binary_filename: ''
+archive_binary_filepath: ''

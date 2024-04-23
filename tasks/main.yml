@@ -2,7 +2,7 @@
 # tasks file for release-installer
 - name: Check if binary already installed
   stat:
-    path: "{{ install_path }}/{{ archive_binary_filename | basename }}"
+    path: "{{ install_path }}/{{ archive_binary_filepath | basename }}"
   register: file_status
 - block:
   - name: Create tempory directory
@@ -25,11 +25,11 @@
       remote_src: true
     register: archive
 
-  - name: Install binary {{ install_path }}/{{ archive_binary_filename | basename }}
+  - name: Install binary {{ install_path }}/{{ archive_binary_filepath | basename }}
     become: true
     copy:
       mode: 755
-      src: "{{ archive.dest }}/{{ archive_binary_filename }}"
+      src: "{{ archive.dest }}/{{ archive_binary_filepath }}"
       dest: "{{ install_path }}/"
       remote_src: true
 

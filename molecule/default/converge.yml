@@ -5,10 +5,10 @@
   roles:
    - role: sohelzerdoumi.release_installer
      archive_url: https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
-     archive_binary_filename: nvim-linux64/bin/nvim
+     archive_binary_filepath: nvim-linux64/bin/nvim
    - role: sohelzerdoumi.release_installer    
      archive_url: https://github.com/jesseduffield/lazygit/releases/download/v0.41.0/lazygit_0.41.0_Linux_32-bit.tar.gz
-     archive_binary_filename: lazygit
+     archive_binary_filepath: lazygit
   post_tasks:
   - name: Check if nvim exists using stat module
     stat:
